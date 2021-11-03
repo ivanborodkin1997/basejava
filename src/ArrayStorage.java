@@ -9,7 +9,7 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
 
     void clear() {
-        Arrays.fill(storage,null);
+        Arrays.fill(storage, null);
     }
 
     void save(Resume resume) {
@@ -22,10 +22,14 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (Resume resume : storage) {
-            if (resume.uuid.equals(uuid)) {
-                return resume;
+        try {
+            for (Resume resume : storage) {
+                if (resume.uuid.equals(uuid)) {
+                    return resume;
+                }
             }
+        } catch (NullPointerException exception) {
+            System.out.println("Резюме с таким uuid не существует");
         }
         return null;
     }
