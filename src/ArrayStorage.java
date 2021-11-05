@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -6,30 +5,36 @@ import java.util.Arrays;
  */
 
 public class ArrayStorage {
+
     Resume[] storage = new Resume[10000];
+    int storageSize;
 
     void clear() {
-        Arrays.fill(storage, null);
+        for (int i = 0; i <= storage.length; i++) {
+            if (storage[i] == null) {
+                Arrays.fill(storage, 0, i, null);
+                break;
+            }
+        }
     }
 
     void save(Resume resume) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 storage[i] = resume;
+                storageSize++;
                 break;
             }
         }
     }
 
     Resume get(String uuid) {
-        try {
-            for (Resume resume : storage) {
-                if (resume.uuid.equals(uuid)) {
-                    return resume;
-                }
+        Resume[] resumes = getAll();
+
+        for (Resume resume : resumes) {
+            if (resume.uuid.equals(uuid)) {
+                return resume;
             }
-        } catch (NullPointerException exception) {
-            System.out.println("Резюме с таким uuid не существует");
         }
         return null;
     }
@@ -38,6 +43,7 @@ public class ArrayStorage {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 storage[i] = null;
+                storageSize--;
                 break;
             }
         }
@@ -67,12 +73,7 @@ public class ArrayStorage {
     }
 
     int size() {
-        int count = 0;
-        for (Resume resume : storage) {
-            if (resume != null) {
-                count++;
-            }
-        }
-        return count;
+        return storageSize;
     }
+
 }
