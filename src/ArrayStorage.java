@@ -19,27 +19,21 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (Resume resume : Arrays.copyOf(storage, storageSize)) {
-            if (resume.uuid.equals(uuid)) {
-                return resume;
+        for (int i = 0; i < storageSize - 1; i++) {
+            if (storage[i].uuid.equals(uuid)) {
+                return storage[i];
             }
         }
         return null;
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < storage.length; i++) {
+        for (int i = 0; i < storageSize; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 storage[i] = null;
                 storageSize--;
-                break;
-            }
-        }
-
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null) {
-                for (int k = i + 1; k < storage.length; k++) {
-                    storage[k - 1] = storage[k];
+                if (storageSize - i + 1 >= 0) {
+                    System.arraycopy(storage, i + 1, storage, i + 1 - 1, storageSize - i + 1);
                 }
                 storage[storage.length - 1] = null;
                 break;
