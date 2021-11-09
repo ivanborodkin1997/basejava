@@ -31,12 +31,8 @@ public class ArrayStorage {
         for (int i = 0; i < storageSize; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 storage[i] = null;
+                System.arraycopy(storage, i + 1, storage, i, storageSize - i + 1);
                 storageSize--;
-                if (storageSize - i + 1 >= 0) {
-                    System.arraycopy(storage, i + 1, storage, i + 1 - 1, storageSize - i + 1);
-                }
-                storage[storage.length - 1] = null;
-                break;
             }
         }
     }
