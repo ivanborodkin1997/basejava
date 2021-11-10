@@ -33,6 +33,7 @@ public class ArrayStorage {
                 storage[i] = null;
                 System.arraycopy(storage, i + 1, storage, i, storageSize - i + 1);
                 storageSize--;
+                break;
             }
         }
     }
